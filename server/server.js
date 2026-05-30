@@ -14,15 +14,22 @@ const PORT = process.env.PORT || 5000;
 const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://localhost:27017/sukh-bmw-db';
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: ['http://localhost:5173', 'http://localhost:3000'],
+  credentials: true
+}));
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // MongoDB Connection
 try {
-  await mongoose.connect(MONGODB_URI);
+  await mongoose.connect(MONGODB_URI, {
+    serverSelectionTimeoutMS: 5000,
+  });
   console.log('✅ MongoDB connected successfully');
 } catch (err) {
-  console.log('⚠️ MongoDB not available, running in demo mode');
+  console.log('⚠️ MongoDB not available - running in demo mode');
+  console.log('Error:', err.message);
 }
 
 // Health Check
