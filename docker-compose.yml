@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  mongodb:
+    image: mongo:latest
+    container_name: bmw-mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - mongodb_data:/data/db
+
+  bmw-app:
+    build: .
+    container_name: bmw-web-app
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      MONGODB_URI: mongodb://admin:password@mongodb:27017/sukh-bmw-db
+      NODE_ENV: production
+    depends_on:
+      - mongodb
+    volumes:
+      - ./server:/app/server
+
+volumes:
+  mongodb_data:
