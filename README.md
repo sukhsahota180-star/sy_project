@@ -1,33 +1,32 @@
 # Sukh's BMW Web App 🚗
 
-A modern, full-stack BMW car configurator and showcase application built with React and Express.
+A modern, full-stack BMW car configurator and showcase application.
 
-## ✨ Features
+## Features
 
-- 🚗 Browse BMW models with real pricing
+- 🚗 Browse BMW models
 - 🎨 Customize and configure vehicles
-- 💰 Real-time pricing calculator
-- 📊 Vehicle inventory management
-- 📱 Fully responsive design
-- ⚡ Fast performance with Vite
-- 🔄 Real-time API integration
+- 💰 Real-time pricing
+- 📊 Inventory management
+- 📱 Responsive design
+- ⚡ Fast with Vite
 
-## 🛠 Tech Stack
+## Tech Stack
 
 ### Frontend
 - React 18+
-- Vite (lightning-fast build tool)
-- Tailwind CSS (utility-first styling)
-- React Router (client-side routing)
-- Axios (HTTP client)
+- Vite
+- Tailwind CSS
+- Axios
+- React Router
 
 ### Backend
 - Node.js
-- Express.js (REST API)
+- Express.js
+- MongoDB
 - CORS enabled
-- Error handling middleware
 
-## 🚀 Quick Start
+## Quick Start
 
 ### Prerequisites
 - Node.js 16+
@@ -35,122 +34,78 @@ A modern, full-stack BMW car configurator and showcase application built with Re
 
 ### Installation
 
-**1. Clone the repository**
+1. Clone the repository
 ```bash
 git clone https://github.com/sukhsahota180-star/sukh-bmw-web-app.git
 cd sukh-bmw-web-app
 ```
 
-**2. Install dependencies**
+2. Install frontend dependencies
 ```bash
-# Frontend
 cd client
-npm install
-
-# Backend (in new terminal)
-cd server
 npm install
 ```
 
-### Running Locally
+3. Install backend dependencies
+```bash
+cd ../server
+npm install
+```
 
-**Terminal 1 - Start Frontend:**
+### Running the App
+
+#### Option 1: Local Development
+
+**Terminal 1 - Frontend:**
 ```bash
 cd client
 npm run dev
 ```
-📍 Access at: **http://localhost:5173**
+Access at: http://localhost:5173
 
-**Terminal 2 - Start Backend:**
+**Terminal 2 - Backend:**
 ```bash
 cd server
 npm run dev
 ```
-📍 Server runs at: **http://localhost:5000**
+Server runs at: http://localhost:5000
 
-### Using Docker
-
+#### Option 2: Docker
 ```bash
 docker-compose up
 ```
-📍 Access at: **http://localhost:5000**
+Access at: http://localhost:5000
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 sukh-bmw-web-app/
-├── client/                          # React Frontend
+├── client/                 # React frontend
 │   ├── src/
-│   │   ├── components/
-│   │   │   ├── Header.jsx
-│   │   │   └── Footer.jsx
-│   │   ├── pages/
-│   │   │   ├── Home.jsx
-│   │   │   ├── Models.jsx
-│   │   │   ├── Configurator.jsx
-│   │   │   ├── Inventory.jsx
-│   │   │   └── Contact.jsx
+│   │   ├── components/    # Header, Footer
+│   │   ├── pages/         # Home, Models, Configurator, etc.
 │   │   ├── App.jsx
-│   │   ├── main.jsx
-│   │   └── index.css
+│   │   └── main.jsx
 │   ├── index.html
-│   ├── vite.config.js
 │   └── package.json
-│
-├── server/                          # Express Backend
-│   ├── routes/
-│   │   ├── models.js
-│   │   ├── inventory.js
-│   │   └── configuration.js
-│   ├── middleware/
-│   │   └── errorHandler.js
+├── server/                 # Express backend
+│   ├── routes/            # API routes
+│   ├── middleware/        # Error handling
 │   ├── server.js
-│   ├── .env
 │   └── package.json
-│
-├── Dockerfile
 ├── docker-compose.yml
-├── .gitignore
+├── Dockerfile
 └── README.md
 ```
 
-## 🔌 API Endpoints
+## API Endpoints
 
-### Health Check
-```
-GET /api/health
-```
-Response:
-```json
-{
-  "status": "Server is running!",
-  "timestamp": "2024-05-30T..."
-}
-```
+- `GET /api/health` - Server health check
+- `GET /api/models` - Get all BMW models
+- `GET /api/inventory` - Get available vehicles
+- `POST /api/configure` - Create vehicle configuration
 
-### Models
-```
-GET /api/models
-```
-Returns all available BMW models with pricing.
-
-### Inventory
-```
-GET /api/inventory
-```
-Returns list of available vehicles.
-
-### Configure Vehicle
-```
-POST /api/configure
-Body: {
-  "model": "BMW M3",
-  "color": "Alpine White",
-  "interior": "Black Nappa Leather"
-}
-```
-
-## 🌐 Environment Variables
+## Environment Variables
 
 ### Backend (server/.env)
 ```
@@ -165,47 +120,25 @@ NODE_ENV=development
 VITE_API_URL=http://localhost:5000/api
 ```
 
-## 📄 Pages
-
-### Home
-- Hero section with call-to-action buttons
-- Feature highlights
-- Responsive design
-
-### Models
-- Browse all BMW models
-- View specifications and pricing
-- Quick model selection
-
-### Configurator
-- Customize BMW with options
-- Real-time price updates
-- Configuration preview
-- Save configurations
-
-### Inventory
-- View available vehicles
-- Filter by model and year
-- Detailed vehicle information
-
-### Contact
-- Contact form
-- Message validation
-- Success confirmation
-
-## 🔧 Troubleshooting
+## Troubleshooting
 
 ### Port Already in Use
-
-**Kill port 5000 (Backend):**
 ```bash
+# Kill process on port 5000
 lsof -ti:5000 | xargs kill -9
-```
 
-**Kill port 5173 (Frontend):**
-```bash
+# Or kill port 5173
 lsof -ti:5173 | xargs kill -9
 ```
+
+### MongoDB Connection Failed
+- Make sure MongoDB is running
+- App works in demo mode without MongoDB
+- Check MONGODB_URI in .env
+
+### CORS Errors
+- Backend has CORS enabled for localhost:5173
+- Check your API URL in frontend .env
 
 ### Dependencies Not Installing
 ```bash
@@ -213,75 +146,32 @@ rm -rf node_modules package-lock.json
 npm install
 ```
 
-### CORS Errors
-- Ensure backend is running on port 5000
-- Check API URL matches in frontend .env
-- Verify CORS is enabled on backend
+## Pages
 
-### API Not Responding
-```bash
-# Test health endpoint
-curl http://localhost:5000/api/health
-```
+1. **Home** - Landing page with features
+2. **Models** - Browse all BMW models
+3. **Configurator** - Build your custom BMW
+4. **Inventory** - View available vehicles
+5. **Contact** - Send messages
 
-## 📦 Build for Production
-
-**Frontend:**
-```bash
-cd client
-npm run build
-```
-Output in `client/dist/`
-
-**Docker:**
-```bash
-docker build -t sukh-bmw-app .
-docker run -p 5000:5000 sukh-bmw-app
-```
-
-## 🚀 Deployment
+## Deployment
 
 ### Vercel (Frontend)
 1. Push to GitHub
-2. Connect repository to Vercel
+2. Import repository to Vercel
 3. Set build command: `npm run build`
-4. Deploy automatically
 
 ### Heroku (Backend)
 ```bash
-heroku login
 heroku create sukh-bmw-api
 heroku config:set MONGODB_URI=your_uri
 git push heroku main
 ```
 
-## 📝 Available Scripts
-
-### Frontend
-```bash
-npm run dev      # Start dev server
-npm run build    # Build for production
-npm run preview  # Preview production build
-```
-
-### Backend
-```bash
-npm run dev      # Start dev server with nodemon
-npm start        # Start production server
-```
-
-## 🤝 Contributing
-
-Feel free to fork and submit pull requests!
-
-## 📄 License
-
-MIT
-
-## 👤 Author
+## Author
 
 Sukh (@sukhsahota180-star)
 
----
+## License
 
-**Made with ❤️ by Sukh** 🚗
+MIT
