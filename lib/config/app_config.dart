@@ -2,15 +2,29 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logger/logger.dart';
 
+class AppConfig {
+  static const String apiBaseUrl = String.fromEnvironment(
+    'API_BASE_URL',
+    defaultValue: 'https://sy-projects.vercel.app',
+  );
+
+  static const String appName = 'SY Projects';
+  static const String appTagline = 'Digital products that grow brands';
+  static const String supportEmail = 'sukhsahota180@gmail.com';
+  static const String supportPhone = '+91 8437 584 541';
+
+  static const String firebaseProjectId = 'sy-projects';
+  static const String firebaseWebApiKey = 'YOUR_WEB_API_KEY';
+  static const String firebaseWebAppId = 'YOUR_WEB_APP_ID';
+  static const String firebaseMessagingSenderId = 'YOUR_MESSAGING_SENDER_ID';
+}
+
 final loggerProvider = Provider<Logger>((ref) => Logger());
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
-      baseUrl: const String.fromEnvironment(
-        'API_BASE_URL',
-        defaultValue: 'https://sy-projects.vercel.app',
-      ),
+      baseUrl: AppConfig.apiBaseUrl,
       connectTimeout: const Duration(seconds: 30),
       receiveTimeout: const Duration(seconds: 30),
       contentType: 'application/json',
@@ -18,7 +32,6 @@ final dioProvider = Provider<Dio>((ref) {
     ),
   );
 
-  // Add logging interceptor
   dio.interceptors.add(
     LoggingInterceptor(ref.watch(loggerProvider)),
   );
@@ -34,7 +47,6 @@ class LoggingInterceptor extends Interceptor {
   @override
   void onRequest(RequestOptions options, RequestInterceptorHandler handler) {
     logger.i('REQUEST: ${options.method} ${options.path}');
-    logger.i('Headers: ${options.headers}');
     if (options.data != null) {
       logger.i('Data: ${options.data}');
     }
